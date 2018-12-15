@@ -47,7 +47,7 @@ public class Main {
                       path = systemInput.nextLine();
                       fCheck = new File(path);
                 }
-                fCheck = null;
+               
 	        filePathAndName = path +"/"+fileMetaData+"/";
                 System.out.println("SERVER STARTED");
                 //--------------------------------------
@@ -57,20 +57,20 @@ public class Main {
            
            
            
-                 Thread saveData = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            PrintStream out = new PrintStream(new File(filePathAndName+"log.txt"));
-                            for (String str : CONNECTIONS_LIST) {
-                                out.println(str); out.flush();
-                            }
-                            out.close();
-                            System.out.println("------LOGS ARE SAVED-----");
-                        } catch (FileNotFoundException ex) {
-                            System.out.println("! Can`t save file !");
-                        }   }
-                }); //save data thread is call when you type 'save' in cmd
+//                 Thread saveData = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            PrintStream out = new PrintStream(new File(filePathAndName+"log.txt"));
+//                            for (String str : CONNECTIONS_LIST) {
+//                                out.println(str); out.flush();
+//                            }
+//                            out.close();
+//                            System.out.println("------LOGS ARE SAVED-----");
+//                        } catch (FileNotFoundException ex) {
+//                            System.out.println("! Can`t save file !");
+//                        }   }
+//                }); //save data thread is call when you type 'save' in cmd
          
          
          
@@ -89,12 +89,13 @@ public class Main {
                                 case HELP : System.out.println(GET_THREADS + " - use to show active threads");
                                 System.out.println(EXIT + " - use to shotdown he server");
                                 break;
-                                case SAVE : saveData.start();
-                                break;
+//                                case SAVE : saveData.start();
+//                                break;
                                 default:System.out.println("Invalid command use 'help' ");
                                 break;
                             }
-                        }      }
+                        }     
+                    }
                 }).start();
          
           
@@ -109,7 +110,7 @@ public class Main {
                    @Override
                    public void run() {
                        Main.activeThreadss++;
-                       UserConnection s = new UserConnection(s1);
+                       UserConnection s = new UserConnection(s1); 
                    }
                }).start();	       
              }
