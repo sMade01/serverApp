@@ -4,7 +4,7 @@ package serverApp;
 
 
 
-import serverApp.Server;
+import serverApp.UserConnection;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class Main {
     public static int PORT ;
     public static int activeThreadss=0;
     
-    
+    ///Terminal comands
     final static String EXIT = ">exit";
     final static String GET_THREADS = ">threads number";
     final static String HELP =">help";
@@ -109,7 +109,7 @@ public class Main {
                    @Override
                    public void run() {
                        Main.activeThreadss++;
-                       Server s = new Server(s1);
+                       UserConnection s = new UserConnection(s1);
                    }
                }).start();	       
              }

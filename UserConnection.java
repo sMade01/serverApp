@@ -5,7 +5,7 @@ package serverApp;
      .....................................No comment..................................
 */
 import serverApp.Main;
-import GitRemote.Main;
+import serverApp.Main;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,13 +14,13 @@ import java.net.Socket;
 import java.util.Date;
 
 
-public class Server {
+public class UserConnection {
 	
     protected Socket socket;
     protected FileInputStream in;
     protected FileOutputStream out;
 	
-	protected Server(Socket s) {
+	protected UserConnection(Socket s) {
 		  
 	   try {
 		   socket = s;
