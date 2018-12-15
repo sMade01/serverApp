@@ -47,7 +47,7 @@ public class Main {
                       path = systemInput.nextLine();
                       fCheck = new File(path);
                 }
-                
+                fCheck = null;
 	        filePathAndName = path +"/"+fileMetaData+"/";
                 System.out.println("SERVER STARTED");
                 //--------------------------------------
@@ -57,7 +57,7 @@ public class Main {
            
            
            
-           Thread saveData = new Thread(new Runnable() {
+                 Thread saveData = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
