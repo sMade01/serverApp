@@ -1,9 +1,10 @@
-package GitRemote;
+package serverApp;
 
 
 /*
      .....................................No comment..................................
 */
+import serverApp.Main;
 import GitRemote.Main;
 import java.io.File;
 import java.io.FileInputStream;
