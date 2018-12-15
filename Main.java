@@ -52,7 +52,7 @@ public class Main {
                 //--------------------------------------
                 
                 
-      
+       
            
            
            
@@ -74,24 +74,27 @@ public class Main {
          
          
          
-         new Thread(()->{  // COMAND THREAD
-             while(true){
-                String comand = systemInput.nextLine();
-                switch(comand){
-                    case EXIT : System.out.println("SYSTEM SHUTDOWN");System.exit(0);
-                     break;
-                    case GET_THREADS : System.out.println("Active Threads - "+activeThreadss); 
-                     break;
-                    case HELP : System.out.println(GET_THREADS + " - use to show active threads");
+         new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // COMAND THREAD
+                        while(true){
+                            String comand = systemInput.nextLine();
+                            switch(comand){
+                                case EXIT : System.out.println("SYSTEM SHUTDOWN");System.exit(0);
+                                break;
+                                case GET_THREADS : System.out.println("Active Threads - "+activeThreadss);
+                                break;
+                                case HELP : System.out.println(GET_THREADS + " - use to show active threads");
                                 System.out.println(EXIT + " - use to shotdown he server");
-                     break;           
-                      case SAVE : saveData.start();
-                     break;
-                    default:System.out.println("Invalid command use 'help' "); 
-                     break; 
-                }
-             }               
-         }).start();
+                                break;
+                                case SAVE : saveData.start();
+                                break;
+                                default:System.out.println("Invalid command use 'help' ");
+                                break;
+                            }
+                        }      }
+                }).start();
          
           
          
@@ -101,9 +104,12 @@ public class Main {
 	  while(true) {	 //CONNECTION THREDS
              Socket s1;
              if( (s1 = serverSocket.accept())!= null) {
-               new Thread(()->{
-                  Main.activeThreadss++;
-                  Server s = new Server(s1);
+               new Thread(new Runnable() {
+                   @Override
+                   public void run() {
+                       Main.activeThreadss++;
+                       Server s = new Server(s1);
+                   }
                }).start();	       
              }
 	  }
