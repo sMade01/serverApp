@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author sMade
  */
 public class DataObject implements Serializable{
-  
+    static final long serialVersionUID=42L;
     private boolean isSendingData;    
     private ArrayList<Byte>data;
 
