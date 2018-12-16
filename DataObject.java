@@ -17,7 +17,7 @@ public class DataObject implements Serializable{
     private boolean isSendingData;    
     private ArrayList<Byte>data;
 
-    public boolean isIsFromClient() {
+    public boolean isSendingData() {
         return isSendingData;
     }
 

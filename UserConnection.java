@@ -15,36 +15,35 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+ 
+ 
 
 public class UserConnection {
   
-    DataObject dataobj ;
-    protected Scanner recognizer ;
+   private DataObject dataobj ;
+   
     protected Socket socket;
     protected FileInputStream in;
     protected FileOutputStream out;
     protected ObjectOutputStream objOut;
     protected ObjectInputStream objIn;
 	
-	protected UserConnection(Socket s) {
-		  
+	protected UserConnection(Socket s) {		  
 	   try {
-		   socket = s;
-			   
-		   
-		   System.out.println("------SERVER CONNECTED------");
-		   if(socket.isConnected()) {
+		   socket = s;			   		   
+		   System.out.println("------SERVER CONNECTED------");		  
+                   if(socket.isConnected()) {
 		      objIn = new ObjectInputStream(socket.getInputStream());
                       dataobj = (DataObject) objIn.readObject();
-                      //if()
+                      if(dataobj.isSendingData() == true){
+                          getData();
+                      }
+                      else{
+                          sendData();
+                      }
                             
 		   }
-		  
-                   
+		                 
 		String c = new Date().toString()+"/INTERNET ADDRESS: "+socket.getInetAddress().toString()+" LOCAL ADDRESS: "+socket.getLocalAddress();
                 System.out.println(c);
 		Main.CONNECTIONS_LIST.add(c);
@@ -61,19 +60,22 @@ public class UserConnection {
 	
 	
 	private void getData(){
-	  try {		
+	   try {		
                
                 String fileMetaData = new Date().toString().replace(':', '_');
 		out = new FileOutputStream(new File(Main.filePath+"/"+fileMetaData+".mp3"));
-		 
-		 
-                		 
-	  } catch (IOException e) {
-	      e.printStackTrace();             
-	  
-          }
-		
-	 
+		ArrayList<Byte> dataFromClient = dataobj.getData();
+                for (Byte b : dataFromClient) {
+                  out.write(b);
+                  out.flush();
+                }
+                objIn.close();
+                out.close();
+                socket.close();
+		            		 
+	   } catch (IOException e) {
+	      e.printStackTrace();             	  
+           }			 
 	     Main.activeThreadss--;
 	}
 	
