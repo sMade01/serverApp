@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class Main {
         
     public static final ArrayList<String>CONNECTIONS_LIST= new ArrayList<>();
-    public static String filePathAndName;
+    public static String filePath;
     public static int PORT ;
     public static int activeThreadss=0;
     
@@ -38,7 +38,6 @@ public class Main {
                 ServerSocket serverSocket = new ServerSocket(PORT);
 
                 //save file path
-                String fileMetaData = new Date().toString().replace(':', '_');
                 System.out.println("-Enter File Path");
                 String path = systemInput.nextLine();
                 File fCheck = new File(path);
@@ -48,7 +47,7 @@ public class Main {
                       fCheck = new File(path);
                 }
                
-	        filePathAndName = path +"/"+fileMetaData+"/";
+	        filePath = path;
                 System.out.println("SERVER STARTED");
                 //--------------------------------------
                 

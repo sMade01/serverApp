@@ -10,16 +10,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class UserConnection {
+  
+    DataObject dataobj ;
     protected Scanner recognizer ;
     protected Socket socket;
     protected FileInputStream in;
     protected FileOutputStream out;
+    protected ObjectOutputStream objOut;
+    protected ObjectInputStream objIn;
 	
 	protected UserConnection(Socket s) {
 		  
@@ -29,13 +38,10 @@ public class UserConnection {
 		   
 		   System.out.println("------SERVER CONNECTED------");
 		   if(socket.isConnected()) {
-			   recognizer = new Scanner(socket.getInputStream());
-                           String singal = recognizer.nextLine();
-                            if(singal.equals("1")){
-                                getData();
-                            }else{
-                                sendData();
-                            }
+		      objIn = new ObjectInputStream(socket.getInputStream());
+                      dataobj = (DataObject) objIn.readObject();
+                      //if()
+                            
 		   }
 		  
                    
@@ -56,23 +62,16 @@ public class UserConnection {
 	
 	private void getData(){
 	  try {		
-                in = (FileInputStream) socket.getInputStream();
-		out = new FileOutputStream(new File(Main.filePathAndName));
-		int count;
-		byte[] buffer = new byte[1024]; // or 4096, or more
-		while ((count = in.read(buffer)) > 0) {		
-		  out.write(buffer, 0, count);
-		  out.flush();
-		}
-		
-		
-		socket.close();
-		in.close();
-		out.close();
+               
+                String fileMetaData = new Date().toString().replace(':', '_');
+		out = new FileOutputStream(new File(Main.filePath+"/"+fileMetaData+".mp3"));
 		 
+		 
+                		 
 	  } catch (IOException e) {
 	      e.printStackTrace();             
-	  }
+	  
+          }
 		
 	 
 	     Main.activeThreadss--;
@@ -80,7 +79,7 @@ public class UserConnection {
 	
 	
         private void sendData(){
-            
+            System.out.println("user2");
              Main.activeThreadss--;
         }
         
